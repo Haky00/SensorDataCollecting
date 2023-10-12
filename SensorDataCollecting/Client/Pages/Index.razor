@@ -1,0 +1,98 @@
+﻿@page "/"
+<PageTitle>Sběr dat</PageTitle>
+
+@inject NavigationManager navManager
+@inject IJSRuntime js
+@inject ILocalStorageService localStorage
+
+<MudStack Spacing="2">
+    @if (sensorsAvailable is null)
+    {
+        <MudText Typo="Typo.h6">Testování senzorů...</MudText>
+    }
+    else if (sensorsAvailable == false)
+    {
+        <MudText Typo="Typo.h6">Senzory jsou nedostupné</MudText>
+        <MudText Typo="Typo.body1">K senzorům ve vašem zařízení nebylo možné získat přístup.</MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.h6">Sběr dat</MudText>
+
+        <MudSelect @bind-Value="movement"
+                   T="MovementType?"
+                   ToStringFunc="(value) => value?.ToName()"
+                   Label="Typ pohybu"
+                   HelperText="Zvolte typ pohybu, který bude vykonáván"
+                   Variant="Variant.Outlined"
+                   AnchorOrigin="Origin.BottomCenter"
+                   PopoverClass="mt-1">
+            @foreach (var value in Enum.GetValues(typeof(MovementType)).Cast<MovementType?>())
+            {
+                <MudSelectItem Value="value" />
+            }
+        </MudSelect>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Class="my-4"
+                   Style="height: 80px"
+                   OnClick="StartCollecting"
+                   Disabled="movement is null">
+            Start sběru dat senzorů
+        </MudButton>
+
+        <MudDivider Class="mt-2 mb-2" />
+
+        <MudText Typo="Typo.h6">Pomocné údaje (vše nepovinné)</MudText>
+
+        <MudSelect @bind-Value="userInfo.Gender" @bind-Value:after="SaveUserInfo"
+                   ToStringFunc="(value) => value?.ToName()"
+                   Label="Pohlaví"
+                   Variant="Variant.Outlined"
+                   AnchorOrigin="Origin.BottomCenter"
+                   PopoverClass="mt-1">
+            <MudSelectItem Value="null" T="Gender?">Nevybráno</MudSelectItem>
+            @foreach (var value in Enum.GetValues(typeof(Gender)).Cast<Gender?>())
+            {
+                <MudSelectItem Value="value" />
+            }
+        </MudSelect>
+
+        <MudNumericField @bind-Value="userInfo.Age" @bind-Value:after="SaveUserInfo" Label="Věk" Min="0" Max="150" Variant="Variant.Outlined" />
+        <MudNumericField @bind-Value="userInfo.Height" @bind-Value:after="SaveUserInfo" Label="Výška [cm]" Min="0" Max="300" Variant="Variant.Outlined" />
+        <MudNumericField @bind-Value="userInfo.Weight" @bind-Value:after="SaveUserInfo" Label="Váha [kg]" Min="0" Max="500" Variant="Variant.Outlined" />
+    }
+</MudStack>
+
+@code {
+    private bool? sensorsAvailable;
+    private MovementType? movement;
+    private UserInfo userInfo = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        sensorsAvailable = await js.InvokeAsync<bool>("sensorsAvailable");
+        if (await localStorage.ContainKeyAsync("userInfo"))
+        {
+            userInfo = await localStorage.GetItemAsync<UserInfo>("userInfo");
+        }
+    }
+
+    private async Task SaveUserInfo()
+    {
+        await localStorage.SetItemAsync<UserInfo>("userInfo", userInfo);
+    }
+
+    private void StartCollecting()
+    {
+        if (movement is null)
+        {
+            return;
+        }
+
+        navManager.NavigateTo($"/Collection/{(int)movement}");
+    }
+}
+
+

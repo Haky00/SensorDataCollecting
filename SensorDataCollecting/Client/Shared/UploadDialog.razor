@@ -1,0 +1,38 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Nahrávání dat
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (Uploader is not null)
+        {
+            <MudStack Row="true" Spacing="4" AlignItems="AlignItems.Center">
+                <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+                @if (Uploader.Total > 1)
+                {
+                    <MudText Typo="Typo.body1">@Uploader.Current / @Uploader.Total</MudText>
+                }
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    public MudDialogInstance? MudDialog { get; set; }
+
+    [Parameter]
+    public DataUploader? Uploader { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (Uploader is not null)
+        {
+            Uploader.StateChanged = new EventCallback(this, StateHasChanged);
+        }
+    }
+}

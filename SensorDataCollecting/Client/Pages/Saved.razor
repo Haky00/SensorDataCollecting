@@ -1,0 +1,86 @@
+﻿@page "/Saved"
+
+@inject ILocalStorageService localStorage
+@inject IHttpClientFactory httpClientFactory
+@inject IDialogService dialogService
+
+<PageTitle>Uložená data</PageTitle>
+
+<MudStack Spacing="2">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mb-2">
+        <MudText Typo="Typo.h6" Class="flex-grow-1">Uložená data</MudText>
+        @if (dataList is not null && dataList.Count(x => !x.IsUploaded) > 0)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="async() => await UploadAll()">Zaslat vše</MudButton>
+        }
+    </MudStack>
+    
+    @if (dataList is null || dataList.Count == 0)
+    {
+        <MudText Typo="Typo.body1">Zatím žádná uložená data</MudText>
+    }
+    else
+    {
+        @foreach (SensorDataWrapper data in dataList.OrderBy(x => x.IsUploaded).ThenByDescending(x => x.SensorData.StartTime))
+        {
+            <MudPaper Class="pa-4" Outlined="true">
+                <MudStack Spacing="2" Row="true" AlignItems="AlignItems.Stretch">
+                    <MudStack Class="flex-grow-1" Spacing="0">
+                        <MudText Typo="Typo.body1">@data.SensorData.Movement.ToName()</MudText>
+                        <MudText Typo="Typo.body2" Style="color: #909090;">@data.SensorData.StartTime UTC</MudText>
+                        <MudText Typo="Typo.caption" Style="color: #A0A0A0; font-size: 0.625rem;">@data.SensorData.Guid</MudText>
+                    </MudStack>
+                    @if (!data.IsUploaded)
+                    {
+                        <MudButton Variant="Variant.Outlined" OnClick="async() => await Upload(data)">Zaslat</MudButton>
+                    }
+                    else
+                    {
+                        <MudIcon Icon="@Icons.Material.Sharp.Check" Color="Color.Success" Size="Size.Large" />
+                    }
+                </MudStack>
+            </MudPaper>
+        }
+    }
+</MudStack>
+
+@code {
+    private SavedDataInfo? info;
+    private List<SensorDataWrapper>? dataList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await localStorage.ContainKeyAsync("savedDataInfo"))
+        {
+            return;
+        }
+
+        info = await localStorage.GetItemAsync<SavedDataInfo>("savedDataInfo");
+        dataList = new();
+
+        foreach (int id in info.SavedData)
+        {
+            if (await localStorage.ContainKeyAsync("data" + id))
+            {
+                dataList.Add(await localStorage.GetItemAsync<SensorDataWrapper>("data" + id));
+            }
+        }
+    }
+
+    private async Task Upload(SensorDataWrapper data)
+    {
+        DataUploader uploader = new DataUploader(httpClientFactory.CreateClient("SensorDataCollecting.ServerAPI"), localStorage, dialogService);
+        await uploader.UploadData(data);
+    }
+
+    private async Task UploadAll()
+    {
+        if (dataList is null)
+        {
+            return;
+        }
+
+        DataUploader uploader = new DataUploader(httpClientFactory.CreateClient("SensorDataCollecting.ServerAPI"), localStorage, dialogService);
+        await uploader.UploadDataMultiple(dataList.Where(x => !x.IsUploaded));
+    }
+}

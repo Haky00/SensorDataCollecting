@@ -1,0 +1,121 @@
+﻿@page "/Collection/{MovementTypeIndex:int}"
+<PageTitle>Sběr dat</PageTitle>
+
+@using System.Text.Json
+
+@inject NavigationManager navManager
+@inject IDialogService dialogService
+@inject IJSRuntime js
+@inject ILocalStorageService localStorage
+
+<MudStack Spacing="2">
+    <MudText Typo="Typo.h6">Probíhá sběr dat</MudText>
+    <MudText Typo="Typo.body1">Typ pohybu: @movement?.ToName()</MudText>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-4" Style="height: 80px" OnClick="StopCollecting">Ukončit sběr dat</MudButton>
+    <MudText Typo="Typo.subtitle2">Gyroscope</MudText>
+    <div id="gyro-info" />
+</MudStack>
+
+<MudDialog @bind-IsVisible="stopDialogVisible" Options="new() { FullWidth = true, DisableBackdropClick = true }">
+    <TitleContent>
+        <MudText Typo="Typo.h6">Sběr ukončen</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-2">Chcete zaslat nasbíraná data ihned, nebo je lokálně uložit a zaslat později?</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" OnClick="SubmitLocal">Lokálně uložit</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SubmitSend">Zaslat ihned</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public int MovementTypeIndex { get; set; }
+
+    private MovementType? movement;
+
+    private bool stopDialogVisible = false;
+    private bool collecting = false;
+
+    private DateTime collectionStart;
+    private DateTime collectionEnd;
+
+    protected override void OnParametersSet()
+    {
+        if (!(Enum.IsDefined(typeof(MovementType), MovementTypeIndex)))
+        {
+            movement = null;
+            return;
+        }
+        movement = (MovementType)MovementTypeIndex;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (collecting)
+        {
+            return;
+        }
+        await js.InvokeVoidAsync("startCollecting");
+        collectionStart = DateTime.UtcNow;
+        collecting = true;
+    }
+
+    private async Task StopCollecting()
+    {
+        if (!collecting)
+        {
+            return;
+        }
+        await js.InvokeVoidAsync("stopCollecting");
+        collecting = false;
+        collectionEnd = DateTime.UtcNow;
+        stopDialogVisible = true;
+    }
+
+    private async Task<string> SaveCollectedData()
+    {
+        if (movement is null)
+        {
+            throw new Exception("Movement type was null");
+        }
+        SavedDataInfo info = new();
+        int nextItemId = 1;
+        if (await localStorage.ContainKeyAsync("savedDataInfo"))
+        {
+            info = await localStorage.GetItemAsync<SavedDataInfo>("savedDataInfo");
+            nextItemId = info.SavedData.Count == 0 ? 1 : info.SavedData.Max() + 1;
+        }
+        string nextItemKey = "data" + nextItemId;
+        string jsonData = await js.InvokeAsync<string>("getCollectedData");
+        SensorData? data = JsonSerializer.Deserialize<SensorData>(jsonData);
+        if (data is null)
+        {
+            throw new Exception("Could not get sensor data from JS");
+        }
+        data.StartTime = collectionStart;
+        data.EndTime = collectionEnd;
+        data.SamplingRate = 60;
+        data.Movement = (MovementType)movement;
+        data.Guid = Guid.NewGuid();
+        SensorDataWrapper dataWrapper = new() { SensorData = data, Id = nextItemId };
+        await localStorage.SetItemAsync<SensorDataWrapper>(nextItemKey, dataWrapper);
+        info.SavedData.Add(nextItemId);
+        await localStorage.SetItemAsync<SavedDataInfo>("savedDataInfo", info);
+        return nextItemKey;
+    }
+
+    private async Task SubmitLocal()
+    {
+        await SaveCollectedData();
+        navManager.NavigateTo("/");
+    }
+
+
+    private async Task SubmitSend()
+    {
+        string dataKey = await SaveCollectedData();
+        navManager.NavigateTo("/");
+    }
+}
