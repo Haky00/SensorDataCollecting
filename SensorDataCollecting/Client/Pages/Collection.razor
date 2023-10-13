@@ -94,12 +94,21 @@
         {
             throw new Exception("Could not get sensor data from JS");
         }
-        data.StartTime = collectionStart;
-        data.EndTime = collectionEnd;
-        data.SamplingRate = 60;
-        data.Movement = (MovementType)movement;
-        data.Guid = Guid.NewGuid();
-        SensorDataWrapper dataWrapper = new() { SensorData = data, Id = nextItemId };
+
+        SensorDataWrapper dataWrapper = new()
+            {
+                SensorData = data,
+                Id = nextItemId,
+                DataInfo = new()
+                {
+                    StartTime = collectionStart,
+                    EndTime = collectionEnd,
+                    SamplingRate = 60,
+                    Movement = (MovementType)movement,
+                    Id = Guid.NewGuid()
+                }
+            };
+
         await localStorage.SetItemAsync<SensorDataWrapper>(nextItemKey, dataWrapper);
         info.SavedData.Add(nextItemId);
         await localStorage.SetItemAsync<SavedDataInfo>("savedDataInfo", info);

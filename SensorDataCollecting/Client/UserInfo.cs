@@ -1,6 +1,6 @@
-﻿using SensorDataCollecting.Shared.Enums;
+﻿using SensorDataCollecting.Client.Enums;
 
-namespace SensorDataCollecting.Shared;
+namespace SensorDataCollecting.Client;
 
 public class UserInfo
 {

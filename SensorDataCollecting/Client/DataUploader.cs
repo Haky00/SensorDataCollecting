@@ -1,35 +1,58 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Postgrest;
 using SensorDataCollecting.Client.Shared;
-using SensorDataCollecting.Shared;
-using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace SensorDataCollecting.Client;
 
 public class DataUploader
 {
-    private HttpClient _httpClient;
     private ILocalStorageService _localStorage;
     private IDialogService _dialogService;
 
     public int Total;
     public int Current;
     public int Success;
-    public List<HttpResponseMessage> Responses = new();
+    public List<HttpResponseMessage?> Responses = new();
     public EventCallback StateChanged;
 
-    public DataUploader(HttpClient httpClient, ILocalStorageService localStorage, IDialogService dialogService)
+    public DataUploader(ILocalStorageService localStorage, IDialogService dialogService)
     {
-        _httpClient = httpClient;
         _localStorage = localStorage;
         _dialogService = dialogService;
     }
 
-    private async Task<HttpResponseMessage> Upload(SensorDataWrapper data)
+    private async Task<Supabase.Client> SupabaseConnect()
     {
-        await Task.Delay(2000);
-        return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+        var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+        var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+
+        var options = new Supabase.SupabaseOptions
+        {
+            AutoConnectRealtime = false,
+        };
+
+        var supabase = new Supabase.Client(url!, key, options);
+        await supabase.InitializeAsync();
+        return supabase;
+    }
+
+    private async Task<HttpResponseMessage?> Upload(SensorDataWrapper data, Supabase.Client db)
+    {
+        QueryOptions queryOptions = new() { Returning = QueryOptions.ReturnType.Minimal };
+
+        SensorDataJson dataJson = data.SensorData.ToJsonData();
+        dataJson.Id = data.DataInfo.Id;
+        var a = await db.From<DataInfo>().Upsert(data.DataInfo, queryOptions);
+        if (a.ResponseMessage is null || !a.ResponseMessage.IsSuccessStatusCode)
+        {
+            return a.ResponseMessage;
+        }
+        var b = await db.From<SensorDataJson>().Upsert(dataJson, queryOptions);
+
+        return b.ResponseMessage;
     }
 
     //private Task<HttpResponseMessage> Upload(SensorDataWrapper data) =>
@@ -37,6 +60,8 @@ public class DataUploader
 
     public async Task UploadDataMultiple(IEnumerable<SensorDataWrapper> dataList)
     {
+        Supabase.Client db = await SupabaseConnect();
+
         Total = dataList.Count();
         Current = 0;
         Success = 0;
@@ -46,9 +71,9 @@ public class DataUploader
 
         foreach (var data in dataList)
         {
-            HttpResponseMessage response = await Upload(data);
+            HttpResponseMessage? response = await Upload(data, db);
             Responses.Add(response);
-            if (response.IsSuccessStatusCode)
+            if (response is not null && response.IsSuccessStatusCode)
             {
                 Current++;
                 Success++;
@@ -61,8 +86,16 @@ public class DataUploader
         dialog.Close();
     }
 
+    class Todo
+    {
+        public string? name;
+        public int priority;
+    }
+
     public async Task UploadData(SensorDataWrapper data)
     {
+        Supabase.Client db = await SupabaseConnect();
+
         Total = 1;
         Current = 0;
         Success = 0;
@@ -70,9 +103,9 @@ public class DataUploader
         var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
         var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
 
-        HttpResponseMessage response = await Upload(data);
+        HttpResponseMessage? response = await Upload(data, db);
         Responses.Add(response);
-        if (response.IsSuccessStatusCode)
+        if (response is not null && response.IsSuccessStatusCode)
         {
             Current++;
             Success++;

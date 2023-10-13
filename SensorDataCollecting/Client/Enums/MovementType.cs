@@ -1,4 +1,4 @@
-﻿namespace SensorDataCollecting.Shared.Enums;
+﻿namespace SensorDataCollecting.Client.Enums;
 
 public enum MovementType
 {

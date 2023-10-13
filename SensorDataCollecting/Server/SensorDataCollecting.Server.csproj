@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\SensorDataCollecting.Client.csproj" />
-    <ProjectReference Include="..\Shared\SensorDataCollecting.Shared.csproj" />
   </ItemGroup>
 
 </Project>

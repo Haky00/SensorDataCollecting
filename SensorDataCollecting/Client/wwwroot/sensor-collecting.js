@@ -29,14 +29,14 @@ function startCollecting() {
     let div_gyroscope = document.getElementById("gyro-info");
     div_gyroscope.textContent = "Starting...";
 
-    for (let i = 0; i < 100; i++) {
-        let data = {
-            X: -0.1,
-            Y: 0.2,
-            Z: 1.01
-        }
-        data_gyroscope.push(data);
-    }
+    //for (let i = 0; i < 100; i++) {
+    //    let data = {
+    //        X: -0.1,
+    //        Y: 0.2,
+    //        Z: 1.01
+    //    }
+    //    data_gyroscope.push(data);
+    //}
 
     gyroscope = new Gyroscope({ frequency: 60 });
     gyroscope.addEventListener("reading", (e) => {

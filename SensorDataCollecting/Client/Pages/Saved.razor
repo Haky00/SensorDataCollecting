@@ -21,14 +21,14 @@
     }
     else
     {
-        @foreach (SensorDataWrapper data in dataList.OrderBy(x => x.IsUploaded).ThenByDescending(x => x.SensorData.StartTime))
+        @foreach (SensorDataWrapper data in dataList.OrderBy(x => x.IsUploaded).ThenByDescending(x => x.DataInfo.StartTime))
         {
             <MudPaper Class="pa-4" Outlined="true">
                 <MudStack Spacing="2" Row="true" AlignItems="AlignItems.Stretch">
                     <MudStack Class="flex-grow-1" Spacing="0">
-                        <MudText Typo="Typo.body1">@data.SensorData.Movement.ToName()</MudText>
-                        <MudText Typo="Typo.body2" Style="color: #909090;">@data.SensorData.StartTime UTC</MudText>
-                        <MudText Typo="Typo.caption" Style="color: #A0A0A0; font-size: 0.625rem;">@data.SensorData.Guid</MudText>
+                        <MudText Typo="Typo.body1">@data.DataInfo.Movement.ToName()</MudText>
+                        <MudText Typo="Typo.body2" Style="color: #909090;">@data.DataInfo.StartTime UTC</MudText>
+                        <MudText Typo="Typo.caption" Style="color: #A0A0A0; font-size: 0.625rem;">@data.DataInfo.Id</MudText>
                     </MudStack>
                     @if (!data.IsUploaded)
                     {
@@ -69,7 +69,7 @@
 
     private async Task Upload(SensorDataWrapper data)
     {
-        DataUploader uploader = new DataUploader(httpClientFactory.CreateClient("SensorDataCollecting.ServerAPI"), localStorage, dialogService);
+        DataUploader uploader = new DataUploader(localStorage, dialogService);
         await uploader.UploadData(data);
     }
 
@@ -80,7 +80,7 @@
             return;
         }
 
-        DataUploader uploader = new DataUploader(httpClientFactory.CreateClient("SensorDataCollecting.ServerAPI"), localStorage, dialogService);
+        DataUploader uploader = new DataUploader(localStorage, dialogService);
         await uploader.UploadDataMultiple(dataList.Where(x => !x.IsUploaded));
     }
 }
