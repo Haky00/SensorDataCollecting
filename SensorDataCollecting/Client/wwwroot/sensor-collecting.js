@@ -5,7 +5,7 @@ let accelerometer;
 let gravitySensor;
 let gyroscope;
 let linearAccelerationSensor;
-let magnetometer;
+//let magnetometer;
 let relativeOrientationSensor;
 
 let data_absoluteOrientationSensor;
@@ -13,7 +13,7 @@ let data_accelerometer;
 let data_gravitySensor;
 let data_gyroscope;
 let data_linearAccelerationSensor;
-let data_magnetometer;
+//let data_magnetometer;
 let data_relativeOrientationSensor;
 
 const info_show_delay = 6;
@@ -24,7 +24,7 @@ function startCollecting() {
     data_gravitySensor = [];
     data_gyroscope = [];
     data_linearAccelerationSensor = [];
-    data_magnetometer = [];
+    //data_magnetometer = [];
     data_relativeOrientationSensor = [];
 
     let i_absoluteOrientationSensor = 0;
@@ -32,7 +32,7 @@ function startCollecting() {
     let i_gravitySensor = 0;
     let i_gyroscope = 0;
     let i_linearAccelerationSensor = 0;
-    let i_magnetometer = 0;
+    //let i_magnetometer = 0;
     let i_relativeOrientationSensor = 0;
 
     let info_absoluteOrientationSensor = document.getElementById("absoluteOrientationSensor-info");
@@ -40,7 +40,7 @@ function startCollecting() {
     let info_gravitySensor = document.getElementById("gravitySensor-info");
     let info_gyroscope = document.getElementById("gyroscope-info");
     let info_linearAccelerationSensor = document.getElementById("linearAccelerationSensor-info");
-    let info_magnetometer = document.getElementById("magnetometer-info");
+    //let info_magnetometer = document.getElementById("magnetometer-info");
     let info_relativeOrientationSensor = document.getElementById("relativeOrientationSensor-info");
 
     info_absoluteOrientationSensor.textContent = "Starting...";
@@ -48,8 +48,13 @@ function startCollecting() {
     info_gravitySensor.textContent = "Starting...";
     info_gyroscope.textContent = "Starting...";
     info_linearAccelerationSensor.textContent = "Starting...";
-    info_magnetometer.textContent = "Starting...";
+    //info_magnetometer.textContent = "Starting...";
     info_relativeOrientationSensor.textContent = "Starting...";
+
+    absoluteOrientationSensor = new AbsoluteOrientationSensor({ frequency: 60, referenceFrame: "device" });
+    absoluteOrientationSensor.addEventListener("reading", (e) => {
+        i_absoluteOrientationSensor = sensorReadXYZW(absoluteOrientationSensor, i_absoluteOrientationSensor, data_absoluteOrientationSensor, info_absoluteOrientationSensor);
+    });
 
     accelerometer = new Accelerometer({ frequency: 60 });
     accelerometer.addEventListener("reading", (e) => {
@@ -71,9 +76,14 @@ function startCollecting() {
         i_linearAccelerationSensor = sensorReadXYZ(linearAccelerationSensor, i_linearAccelerationSensor, data_linearAccelerationSensor, info_linearAccelerationSensor);
     });
 
-    magnetometer = new Magnetometer({ frequency: 60 });
-    magnetometer.addEventListener("reading", (e) => {
-        i_magnetometer = sensorReadXYZ(magnetometer, i_magnetometer, data_magnetometer, info_magnetometer);
+    //magnetometer = new Magnetometer({ frequency: 60 });
+    //magnetometer.addEventListener("reading", (e) => {
+    //    i_magnetometer = sensorReadXYZ(magnetometer, i_magnetometer, data_magnetometer, info_magnetometer);
+    //});
+
+    relativeOrientationSensor = new RelativeOrientationSensor({ frequency: 60, referenceFrame: "device" });
+    relativeOrientationSensor.addEventListener("reading", (e) => {
+        i_relativeOrientationSensor = sensorReadXYZW(relativeOrientationSensor, i_relativeOrientationSensor, data_relativeOrientationSensor, info_relativeOrientationSensor);
     });
 
     gyroscope.start();
@@ -89,6 +99,21 @@ function sensorReadXYZ(sensor, i, data, info) {
     if (i == info_show_delay) {
         i = 0;
         info.textContent = `x: ${sensor.x < 0 ? '' : ' '}${Number(sensor.x).toFixed(5)} | y: ${sensor.y < 0 ? '' : ' '}${Number(sensor.y).toFixed(5)} | z: ${sensor.z < 0 ? '' : ' '}${Number(sensor.z).toFixed(5)}`
+    }
+    return i;
+}
+
+function sensorReadXYZW(sensor, i, data, info) {
+    i++;
+    data.push({
+        X: sensor.x,
+        Y: sensor.y,
+        Z: sensor.z,
+        W: sensor.w
+    });
+    if (i == info_show_delay) {
+        i = 0;
+        info.textContent = `x: ${sensor.x < 0 ? '' : ' '}${Number(sensor.x).toFixed(3)} | y: ${sensor.y < 0 ? '' : ' '}${Number(sensor.y).toFixed(3)} | z: ${sensor.z < 0 ? '' : ' '}${Number(sensor.z).toFixed(3)} | w: ${sensor.w < 0 ? '' : ' '}${Number(sensor.w).toFixed(3)}`
     }
     return i;
 }

@@ -5,8 +5,8 @@ async function sensorsAvailable() {
         window.GravitySensor &&
         window.Gyroscope &&
         window.LinearAccelerationSensor &&
-        window.Magnetometer &&
-        window.RelativeOrientationSensor ) {
+        //window.Magnetometer &&
+        window.RelativeOrientationSensor) {
 
         if (await sensorPermission("gyroscope") && await sensorPermission("accelerometer") && await sensorPermission("magnetometer")) {
             return true;
