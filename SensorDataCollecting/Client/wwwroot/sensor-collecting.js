@@ -96,7 +96,7 @@ function startCollecting() {
 }
 
 function numberFormat(n, places) {
-    return n < 0 ? "" : " " + Number(n).toFixed(places);
+    return (n < 0 ? "" : " ") + Number(n).toFixed(places);
 }
 
 function sensorReadXYZ(sensor, i, data, info) {
@@ -123,7 +123,7 @@ function sensorReadXYZW(sensor, i, data, info) {
     });
     if (i == info_show_delay) {
         i = 0;
-        info.textContent = `x: ${numberFormat(sensor.x, 3)} | y: ${numberFormat(sensor.y, 3)} | z: ${numberFormat(sensor.z, 3)} | w: ${numberFormat(sensor.w, 3)}`
+        info.textContent = `x: ${numberFormat(sensor.quaternion[0], 3)} | y: ${numberFormat(sensor.quaternion[1], 3)} | z: ${numberFormat(sensor.quaternion[2], 3)} | w: ${numberFormat(sensor.quaternion[3], 3)}`
     }
     return i;
 }
