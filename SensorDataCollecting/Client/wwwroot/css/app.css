@@ -33,4 +33,5 @@ h1:focus {
 
 .data-display {
     font-family: monospace, monospace;
+    font-size: 0.75rem;
 }
