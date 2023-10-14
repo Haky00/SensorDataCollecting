@@ -74,7 +74,7 @@
         stopDialogVisible = true;
     }
 
-    private async Task<string> SaveCollectedData()
+    private async Task<SensorDataWrapper> SaveCollectedData()
     {
         if (movement is null)
         {
@@ -112,19 +112,21 @@
         await localStorage.SetItemAsync<SensorDataWrapper>(nextItemKey, dataWrapper);
         info.SavedData.Add(nextItemId);
         await localStorage.SetItemAsync<SavedDataInfo>("savedDataInfo", info);
-        return nextItemKey;
+        return dataWrapper;
     }
 
     private async Task SubmitLocal()
     {
         await SaveCollectedData();
-        navManager.NavigateTo("/");
+        navManager.NavigateTo("");
     }
 
 
     private async Task SubmitSend()
     {
-        string dataKey = await SaveCollectedData();
-        navManager.NavigateTo("/");
+        SensorDataWrapper data = await SaveCollectedData();
+        DataUploader uploader = new DataUploader(localStorage, dialogService);
+        await uploader.UploadData(data);
+        navManager.NavigateTo("");
     }
 }
