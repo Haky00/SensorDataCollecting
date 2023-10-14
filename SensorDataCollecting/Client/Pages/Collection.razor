@@ -118,7 +118,7 @@
     private async Task SubmitLocal()
     {
         await SaveCollectedData();
-        navManager.NavigateTo("");
+        navManager.NavigateTo("Collection");
     }
 
 
@@ -127,6 +127,6 @@
         SensorDataWrapper data = await SaveCollectedData();
         DataUploader uploader = new DataUploader(localStorage, dialogService);
         await uploader.UploadData(data);
-        navManager.NavigateTo("");
+        navManager.NavigateTo("Collection");
     }
 }
