@@ -7,7 +7,7 @@ namespace SensorDataCollecting.Client;
 
 public class SensorDataJson : BaseModel
 {
-    [PrimaryKey]
+    [PrimaryKey("Id")]
     public Guid Id { get; set; }
     public string? AbsoluteOrientationSensor { get; set; }
     public string? Accelerometer { get; set; }
@@ -31,7 +31,7 @@ public class SensorData
 
 public class DataInfo : BaseModel
 {
-    [PrimaryKey]
+    [PrimaryKey("Id")]
     public Guid Id { get; set; }
     public MovementType Movement { get; set; }
     public int SamplingRate { get; set; }
