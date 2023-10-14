@@ -1,14 +1,14 @@
 async function sensorsAvailable() {
     if (
-        //window.AbsoluteOrientationSensor &&
-        //window.Accelerometer &&
-        //window.GravitySensor &&
-        window.Gyroscope) {// &&
-        //window.LinearAccelerationSensor &&
-        //window.Magnetometer &&
-        //window.RelativeOrientationSensor ) {
+        window.AbsoluteOrientationSensor &&
+        window.Accelerometer &&
+        window.GravitySensor &&
+        window.Gyroscope &&
+        window.LinearAccelerationSensor &&
+        window.Magnetometer &&
+        window.RelativeOrientationSensor ) {
 
-        if (await sensorPermission("gyroscope")) {// && await sensorPermission("accelerometer") && await sensorPermission("magnetometer")) {
+        if (await sensorPermission("gyroscope") && await sensorPermission("accelerometer") && await sensorPermission("magnetometer")) {
             return true;
         }
     }

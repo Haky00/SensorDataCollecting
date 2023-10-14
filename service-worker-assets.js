@@ -25,11 +25,11 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-jZ+E22T\/oF+lMQk+LY2Ua0fRpEmFo9NS\/6B7whbELU4=",
+      "hash": "sha256-FoUgVUON\/ulzJf+qJMSqbGzwp5kYLsR2KOayFO61E2Q=",
       "url": "sensor-collecting.js"
     },
     {
-      "hash": "sha256-o+G8LIxo6fDn8UwJWVURiySffHjuAX5L+tueyTOblQM=",
+      "hash": "sha256-OetoBFLPSLoUALk\/aRn+2ruKMHgDzX7s7QwxNQY886E=",
       "url": "sensor-detection.js"
     },
     {
@@ -429,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "PawYBSGR"
+  "version": "Yg\/w8VoZ"
 };
