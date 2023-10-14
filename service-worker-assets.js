@@ -25,11 +25,11 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-FoUgVUON\/ulzJf+qJMSqbGzwp5kYLsR2KOayFO61E2Q=",
+      "hash": "sha256-3QvA1ZWGF74zULGXSXVWteErj54JFrqWm810DW8Xzbw=",
       "url": "sensor-collecting.js"
     },
     {
-      "hash": "sha256-OetoBFLPSLoUALk\/aRn+2ruKMHgDzX7s7QwxNQY886E=",
+      "hash": "sha256-6Z+yX3RGdkeIfl7arHL1xY4\/ZSJ6MxevAlkO89H1mTA=",
       "url": "sensor-detection.js"
     },
     {
@@ -65,7 +65,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-YS1ZYH0R3A8xJrl\/OOT2aitMmjsVJ8NXa8lHmSBceRI=",
+      "hash": "sha256-uZ6RA0KtxuH3oWVvaiaCZ2PllRbFkLz7nKbiHxSP1bU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -169,7 +169,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-2FbDsBrg2dMEqprVpBZfF47tWcjT+QJtE1sduKh3ajI=",
+      "hash": "sha256-o+HRvNw3S9elTag6DUWSt5+X3qdhsm5G\/2zsVsYCetU=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -429,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "Yg\/w8VoZ"
+  "version": "z7d0Sj4h"
 };
