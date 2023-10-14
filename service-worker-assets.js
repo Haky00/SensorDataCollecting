@@ -1,6 +1,10 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
+      "hash": "sha256-p45Kbgs7bzlNAgwqANYjkOddZGyzj48iwJ3wUGwsR7I=",
+      "url": "404.html"
+    },
+    {
       "hash": "sha256-w09Bz6wPc9ig5xL20iLkeL+n21E7voE46z50KcACCrU=",
       "url": "css\/app.css"
     },
@@ -9,11 +13,11 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-RkKO1+Y4iD7l3woEV06t9xOXLwmlO9WKX6YcH8g1EgA=",
+      "hash": "sha256-gRVO5dOJDH8FYvURWNoR\/LP+kFB8c897oA+uQQQfyIQ=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-6pNfqOJKICilP3f0v\/IicChWH8P0vyoBYd8DAWzv60M=",
+      "hash": "sha256-Yw887NgyLTx+BUBTzrWklyOAmdISNylH7teRj395FGQ=",
       "url": "manifest.json"
     },
     {
@@ -57,7 +61,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-hjxdHDxaTHvvOKram7UzDUi\/SgNQds4IT\/rt08hxvTc=",
+      "hash": "sha256-r1AWvB\/QhTmp1\/hDJpAg1er1XlhNIobgXeIsmiF3KVk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -161,7 +165,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-zQpl5UTR6O3JNIaQcCV+O7LdBwuwLUqRvi7Jlj\/mPQU=",
+      "hash": "sha256-R1wQPjWOD+YgP7uQBXoZFVurBNCkVKIyoR30urhjagE=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -421,5 +425,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "Nd4ctZK\/"
+  "version": "SvDKSYUA"
 };
