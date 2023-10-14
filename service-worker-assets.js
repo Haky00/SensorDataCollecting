@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-zWP9tJvt8oRgpCJ8UFwaXnifzgqVMA395+rHRCKAAQU=",
+      "hash": "sha256-w09Bz6wPc9ig5xL20iLkeL+n21E7voE46z50KcACCrU=",
       "url": "css\/app.css"
     },
     {
@@ -9,11 +9,11 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-1M3WxcAICOpgF+8rC1cpu\/iNjK7rVdxuRZ5w9myu2NQ=",
+      "hash": "sha256-RkKO1+Y4iD7l3woEV06t9xOXLwmlO9WKX6YcH8g1EgA=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-KZAT7Axh3\/Fe3hGG2pkm5auDBYuJXaVsJBc9ZHTVusc=",
+      "hash": "sha256-6pNfqOJKICilP3f0v\/IicChWH8P0vyoBYd8DAWzv60M=",
       "url": "manifest.json"
     },
     {
@@ -57,7 +57,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-Vluyweod\/MFp94hmooI5Ww6jUDJdHz3eZ987UyshpMs=",
+      "hash": "sha256-hjxdHDxaTHvvOKram7UzDUi\/SgNQds4IT\/rt08hxvTc=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -149,7 +149,7 @@
       "url": "_framework\/MimeMapping.dll"
     },
     {
-      "hash": "sha256-38Kx49RgV1OtujO2MpzxwXy8Ow9fKiW4VEkmIHECFX4=",
+      "hash": "sha256-eogLCiz1YDZ62llVwK3lmvcklqokLWiVG\/l1rCsp1WQ=",
       "url": "_framework\/MudBlazor.dll"
     },
     {
@@ -161,7 +161,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-gPpyKTtes6QggO96JnNDB\/HA+P2noGi77bugn\/AAVgg=",
+      "hash": "sha256-zQpl5UTR6O3JNIaQcCV+O7LdBwuwLUqRvi7Jlj\/mPQU=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -421,5 +421,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "kD6UkgyS"
+  "version": "Nd4ctZK\/"
 };
