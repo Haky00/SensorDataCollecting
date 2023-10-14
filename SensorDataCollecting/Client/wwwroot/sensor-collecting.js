@@ -14,8 +14,16 @@ let data_linearAccelerationSensor;
 let data_magnetometer;
 let data_relativeOrientationSensor;
 
+const info_show_delay = 6;
+
 function startCollecting() {
+    data_absoluteOrientationSensor = [];
+    data_accelerometer = [];
+    data_gravitySensor = [];
     data_gyroscope = [];
+    data_linearAccelerationSensor = [];
+    data_magnetometer = [];
+    data_relativeOrientationSensor = [];
 
     let i_absoluteOrientationSensor = 0;
     let i_accelerometer = 0;
@@ -24,34 +32,49 @@ function startCollecting() {
     let i_linearAccelerationSensor = 0;
     let i_magnetometer = 0;
     let i_relativeOrientationSensor = 0;
-    const showDelay = 10;
 
-    let div_gyroscope = document.getElementById("gyro-info");
-    div_gyroscope.textContent = "Starting...";
+    let info_absoluteOrientationSensor = document.getElementById("absoluteOrientationSensor-info");
+    let info_accelerometer = document.getElementById("accelerometer-info");
+    let info_gravitySensor = document.getElementById("gravitySensor-info");
+    let info_gyroscope = document.getElementById("gyroscope-info");
+    let info_linearAccelerationSensor = document.getElementById("linearAccelerationSensor-info");
+    let info_magnetometer = document.getElementById("magnetometer-info");
+    let info_relativeOrientationSensor = document.getElementById("relativeOrientationSensor-info");
 
-    //for (let i = 0; i < 100; i++) {
-    //    let data = {
-    //        X: -0.1,
-    //        Y: 0.2,
-    //        Z: 1.01
-    //    }
-    //    data_gyroscope.push(data);
-    //}
+    info_absoluteOrientationSensor.textContent = "Starting...";
+    info_accelerometer.textContent = "Starting...";
+    info_gravitySensor.textContent = "Starting...";
+    info_gyroscope.textContent = "Starting...";
+    info_linearAccelerationSensor.textContent = "Starting...";
+    info_magnetometer.textContent = "Starting...";
+    info_relativeOrientationSensor.textContent = "Starting...";
+
+    accelerometer = new Accelerometer({ frequency: 60 });
+    accelerometer.addEventListener("reading", (e) => {
+        i_accelerometer = sensorReadXYZ(accelerometer, i_accelerometer, data_accelerometer, info_accelerometer);
+    });
 
     gyroscope = new Gyroscope({ frequency: 60 });
     gyroscope.addEventListener("reading", (e) => {
-        i_gyroscope++;
-        data_gyroscope.push({
-            X: gyroscope.x,
-            Y: gyroscope.y,
-            Z: gyroscope.z
-        });
-        if (i_gyroscope == showDelay) {
-            div_gyroscope.textContent = `x: ${gyroscope.x} | y: ${gyroscope.y} | z: ${gyroscope.z}`;
-            i_gyroscope = 0;
-        }
+        i_gyroscope = sensorReadXYZ(gyroscope, i_gyroscope, data_gyroscope, info_gyroscope);
     });
+
+
     gyroscope.start();
+}
+
+function sensorReadXYZ(sensor, i, data, info) {
+    i++;
+    data.push({
+        X: sensor.x,
+        Y: sensor.y,
+        Z: sensor.z
+    });
+    if (i == info_show_delay) {
+        i = 0;
+        info.textContent = `x: ${Number(sensor.x).toFixed(5)} | y: ${Number(sensor.y).toFixed(5)} | z: ${Number(sensor.z).toFixed(5)}`
+    }
+    return i;
 }
 
 function stopCollecting() {

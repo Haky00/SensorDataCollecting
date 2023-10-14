@@ -12,8 +12,34 @@
     <MudText Typo="Typo.h6">Probíhá sběr dat</MudText>
     <MudText Typo="Typo.body1">Typ pohybu: @movement?.ToName()</MudText>
     <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-4" Style="height: 80px" OnClick="StopCollecting">Ukončit sběr dat</MudButton>
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Absolute Orientation Sensor</MudText>
+    <div id="absoluteOrientationSensor-info" class="data-display" />
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Accelerometer</MudText>
+    <div id="accelerometer-info" class="data-display" />
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Gravity Sensor</MudText>
+    <div id="gravitySensor-info" class="data-display" />
+    <MudDivider />
+
     <MudText Typo="Typo.subtitle2">Gyroscope</MudText>
-    <div id="gyro-info" />
+    <div id="gyroscope-info" class="data-display" />
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Linear Acceleration Sensor</MudText>
+    <div id="linearAccelerationSensor-info" class="data-display" />
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Magnetometer</MudText>
+    <div id="magnetometer-info" class="data-display" />
+    <MudDivider />
+
+    <MudText Typo="Typo.subtitle2">Relative Orientation Sensor</MudText>
+    <div id="relativeOrientationSensor-info" class="data-display" />
 </MudStack>
 
 <MudDialog @bind-IsVisible="stopDialogVisible" Options="new() { FullWidth = true, DisableBackdropClick = true }">
