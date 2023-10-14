@@ -86,7 +86,17 @@ function startCollecting() {
         i_relativeOrientationSensor = sensorReadXYZW(relativeOrientationSensor, i_relativeOrientationSensor, data_relativeOrientationSensor, info_relativeOrientationSensor);
     });
 
+    absoluteOrientationSensor.start();
+    accelerometer.start();
+    gravitySensor.start();
     gyroscope.start();
+    linearAccelerationSensor.start();
+    //magnetometer.start();
+    relativeOrientationSensor.start();
+}
+
+function numberFormat(n, places) {
+    return n < 0 ? "" : " " + Number(n).toFixed(places);
 }
 
 function sensorReadXYZ(sensor, i, data, info) {
@@ -98,7 +108,7 @@ function sensorReadXYZ(sensor, i, data, info) {
     });
     if (i == info_show_delay) {
         i = 0;
-        info.textContent = `x: ${sensor.x < 0 ? '' : ' '}${Number(sensor.x).toFixed(5)} | y: ${sensor.y < 0 ? '' : ' '}${Number(sensor.y).toFixed(5)} | z: ${sensor.z < 0 ? '' : ' '}${Number(sensor.z).toFixed(5)}`
+        info.textContent = `x: ${numberFormat(sensor.x, 5)} | y: ${numberFormat(sensor.y, 5)} | z: ${numberFormat(sensor.z, 5)}`
     }
     return i;
 }
@@ -113,7 +123,7 @@ function sensorReadXYZW(sensor, i, data, info) {
     });
     if (i == info_show_delay) {
         i = 0;
-        info.textContent = `x: ${sensor.x < 0 ? '' : ' '}${Number(sensor.x).toFixed(3)} | y: ${sensor.y < 0 ? '' : ' '}${Number(sensor.y).toFixed(3)} | z: ${sensor.z < 0 ? '' : ' '}${Number(sensor.z).toFixed(3)} | w: ${sensor.w < 0 ? '' : ' '}${Number(sensor.w).toFixed(3)}`
+        info.textContent = `x: ${numberFormat(sensor.x, 3)} | y: ${numberFormat(sensor.y, 3)} | z: ${numberFormat(sensor.z, 3)} | w: ${numberFormat(sensor.w, 3)}`
     }
     return i;
 }
