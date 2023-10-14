@@ -5,23 +5,27 @@
       "url": "404.html"
     },
     {
-      "hash": "sha256-w09Bz6wPc9ig5xL20iLkeL+n21E7voE46z50KcACCrU=",
+      "hash": "sha256-cezK0ck1ZBLf5I5iXtCsJ26aGYAbMdal64KizNFOA2Q=",
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-oEo6d+KqX5fjxTiZk\/w9NB3Mi0+ycS5yLwCKwr4IkbA=",
+      "hash": "sha256-SoO2Hv029C7LktMyHwX1ZqkHwADNuLmF+sXaVgc9C0w=",
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-FYynAaJ25uOUSOIwxVp4N4y1dQJxENQN5b7MqpKk4Tk=",
+      "hash": "sha256-oiuU9L9DeWNlpXRpA2kQlHsPsARV+D3DbJcb75N9l18=",
       "url": "index.html"
+    },
+    {
+      "hash": "sha256-66IAeHKChsYtZJnfHnqn\/J+eAneFwgr7xhcKZAbnq+I=",
+      "url": "install.png"
     },
     {
       "hash": "sha256-Yw887NgyLTx+BUBTzrWklyOAmdISNylH7teRj395FGQ=",
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-DFSnCptokJzLkJSCRTiu9NlFTlNsq0M46p0hQ+9cNK0=",
+      "hash": "sha256-jZ+E22T\/oF+lMQk+LY2Ua0fRpEmFo9NS\/6B7whbELU4=",
       "url": "sensor-collecting.js"
     },
     {
@@ -61,7 +65,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-gmWCbXnaTy8ljGqMRlTE4lN7yKQgsgBTBZVqReKRoXg=",
+      "hash": "sha256-YS1ZYH0R3A8xJrl\/OOT2aitMmjsVJ8NXa8lHmSBceRI=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -165,7 +169,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-08abYihMIHoOokA5T4uSHix3rFoOwz1Z543ws\/37Uew=",
+      "hash": "sha256-2FbDsBrg2dMEqprVpBZfF47tWcjT+QJtE1sduKh3ajI=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -425,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "DaAHFvSK"
+  "version": "PawYBSGR"
 };
