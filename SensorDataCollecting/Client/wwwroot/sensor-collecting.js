@@ -1,3 +1,5 @@
+// God forgive me
+
 let absoluteOrientationSensor;
 let accelerometer;
 let gravitySensor;
@@ -54,11 +56,25 @@ function startCollecting() {
         i_accelerometer = sensorReadXYZ(accelerometer, i_accelerometer, data_accelerometer, info_accelerometer);
     });
 
+    gravitySensor = new GravitySensor({ frequency: 60 });
+    gravitySensor.addEventListener("reading", (e) => {
+        i_gravitySensor = sensorReadXYZ(gravitySensor, i_gravitySensor, data_gravitySensor, info_gravitySensor);
+    });
+
     gyroscope = new Gyroscope({ frequency: 60 });
     gyroscope.addEventListener("reading", (e) => {
         i_gyroscope = sensorReadXYZ(gyroscope, i_gyroscope, data_gyroscope, info_gyroscope);
     });
 
+    linearAccelerationSensor = new LinearAccelerationSensor({ frequency: 60 });
+    linearAccelerationSensor.addEventListener("reading", (e) => {
+        i_linearAccelerationSensor = sensorReadXYZ(linearAccelerationSensor, i_linearAccelerationSensor, data_linearAccelerationSensor, info_linearAccelerationSensor);
+    });
+
+    magnetometer = new Magnetometer({ frequency: 60 });
+    magnetometer.addEventListener("reading", (e) => {
+        i_magnetometer = sensorReadXYZ(magnetometer, i_magnetometer, data_magnetometer, info_magnetometer);
+    });
 
     gyroscope.start();
 }
@@ -72,7 +88,7 @@ function sensorReadXYZ(sensor, i, data, info) {
     });
     if (i == info_show_delay) {
         i = 0;
-        info.textContent = `x: ${Number(sensor.x).toFixed(5)} | y: ${Number(sensor.y).toFixed(5)} | z: ${Number(sensor.z).toFixed(5)}`
+        info.textContent = `x: ${sensor.x < 0 ? '' : ' '}${Number(sensor.x).toFixed(5)} | y: ${sensor.y < 0 ? '' : ' '}${Number(sensor.y).toFixed(5)} | z: ${sensor.z < 0 ? '' : ' '}${Number(sensor.z).toFixed(5)}`
     }
     return i;
 }
