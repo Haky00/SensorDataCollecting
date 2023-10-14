@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="MyCustomTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -9,7 +9,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudText Class="ml-2">Sběr dat mobilních senzorů</MudText>
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1">
+    <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Never" Elevation="1" App>
         <MyNavMenu />
     </MudDrawer>
     <MudMainContent>
@@ -21,9 +21,35 @@
 
 @code {
     bool _drawerOpen = false;
+    private bool _isDarkMode;
+    private MudThemeProvider? _mudThemeProvider;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender &&_mudThemeProvider is not null)
+        {
+            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+            StateHasChanged();
+        }
+    }
+
+    MudTheme MyCustomTheme = new MudTheme()
+        {
+            Palette = new PaletteLight()
+            {
+                Primary = Colors.Indigo.Lighten1,
+                AppbarBackground = Colors.Indigo.Lighten1,
+            },
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Indigo.Lighten2,
+                Background = "#32333d",
+                Surface = "#32333d"
+            },
+        };
 }

@@ -1,10 +1,10 @@
 {
-  "name": "SensorDataCollecting",
-  "short_name": "SensorDataCollecting",
+  "name": "Sensor Data Collecting",
+  "short_name": "Sensor Data Collecting",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#03173d",
+  "theme_color": "#3F51B5",
   "prefer_related_applications": false,
   "icons": [
     {

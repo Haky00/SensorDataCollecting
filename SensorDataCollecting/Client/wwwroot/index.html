@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>SensorDataCollecting</title>
+    <title>Sensor Data Collecting</title>
     <base href="/" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
@@ -12,12 +12,68 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 
+    <style>
+        .loading-container {
+            background: #fff;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .lds-dual-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                border-radius: 50%;
+                border: 6px solid #000;
+                border-color: #000 transparent #000 transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .loading-container {
+                background: #27272f;
+            }
+            .lds-dual-ring:after {
+                border: 6px solid #fff;
+                border-color: #fff transparent #fff transparent;
+            }
+        }
+    </style>
+
     <!-- If you add any scoped CSS files, uncomment the following to load them
     <link href="SensorDataCollecting.Client.styles.css" rel="stylesheet" /> -->
 </head>
 
 <body>
-    <div id="app">Načítání...</div>
+    <div id="app">
+        <div class="loading-container"><div class="lds-dual-ring"></div></div>
+        
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

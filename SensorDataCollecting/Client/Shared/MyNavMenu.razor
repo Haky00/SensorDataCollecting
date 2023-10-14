@@ -1,6 +1,10 @@
 ﻿<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All">Sběr dat</MudNavLink>
-    <MudNavLink Href="Saved" Match="NavLinkMatch.Prefix">Uložená data</MudNavLink>
+    <MudStack Style="height: calc(var(--mud-appbar-height) - var(--mud-appbar-height)/8);" Row="true" AlignItems="AlignItems.Center">
+        <MudText Class="px-5">Menu</MudText>
+    </MudStack>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Info">Informace</MudNavLink>
+    <MudNavLink Href="Collection" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Sensors">Sběr dat</MudNavLink>
+    <MudNavLink Href="Saved" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Save">Uložená data</MudNavLink>
 </MudNavMenu>
 
 @code {

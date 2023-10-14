@@ -86,12 +86,6 @@ public class DataUploader
         dialog.Close();
     }
 
-    class Todo
-    {
-        public string? name;
-        public int priority;
-    }
-
     public async Task UploadData(SensorDataWrapper data)
     {
         Supabase.Client db = await SupabaseConnect();
