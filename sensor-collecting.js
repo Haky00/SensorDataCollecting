@@ -27,13 +27,29 @@ function startCollecting() {
     data_absoluteOrientationSensor = [];
     data_relativeOrientationSensor = [];
 
-    let i_absoluteOrientationSensor = 0;
     let i_accelerometer = 0;
     let i_gravitySensor = 0;
     let i_gyroscope = 0;
-    //let i_magnetometer = 0;
     let i_linearAccelerationSensor = 0;
+    //let i_magnetometer = 0;
+    let i_absoluteOrientationSensor = 0;
     let i_relativeOrientationSensor = 0;
+
+    let i_accelerometer = 0;
+    let i_gravitySensor = 0;
+    let i_gyroscope = 0;
+    let i_linearAccelerationSensor = 0;
+    //let i_magnetometer = 0;
+    let i_absoluteOrientationSensor = 0;
+    let i_relativeOrientationSensor = 0;
+
+    let ts_accelerometer = 0;
+    let ts_gravitySensor = 0;
+    let ts_gyroscope = 0;
+    let ts_linearAccelerationSensor = 0;
+    //let ts_magnetometer = 0;
+    let ts_absoluteOrientationSensor = 0;
+    let ts_relativeOrientationSensor = 0;
 
     let info_accelerometer = document.getElementById("accelerometer-info");
     let info_gravitySensor = document.getElementById("gravitySensor-info");
@@ -53,37 +69,37 @@ function startCollecting() {
 
     accelerometer = new Accelerometer({ frequency: 60 });
     accelerometer.addEventListener("reading", (e) => {
-        i_accelerometer = sensorReadXYZ(accelerometer, i_accelerometer, data_accelerometer, info_accelerometer);
+        i_accelerometer = sensorReadXYZ(accelerometer, i_accelerometer, data_accelerometer, info_accelerometer, ts_accelerometer);
     });
 
     gravitySensor = new GravitySensor({ frequency: 60 });
     gravitySensor.addEventListener("reading", (e) => {
-        i_gravitySensor = sensorReadXYZ(gravitySensor, i_gravitySensor, data_gravitySensor, info_gravitySensor);
+        i_gravitySensor = sensorReadXYZ(gravitySensor, i_gravitySensor, data_gravitySensor, info_gravitySensor, ts_gravitySensor);
     });
 
     gyroscope = new Gyroscope({ frequency: 60 });
     gyroscope.addEventListener("reading", (e) => {
-        i_gyroscope = sensorReadXYZ(gyroscope, i_gyroscope, data_gyroscope, info_gyroscope);
+        i_gyroscope = sensorReadXYZ(gyroscope, i_gyroscope, data_gyroscope, info_gyroscope, ts_gyroscope);
     });
 
     linearAccelerationSensor = new LinearAccelerationSensor({ frequency: 60 });
     linearAccelerationSensor.addEventListener("reading", (e) => {
-        i_linearAccelerationSensor = sensorReadXYZ(linearAccelerationSensor, i_linearAccelerationSensor, data_linearAccelerationSensor, info_linearAccelerationSensor);
+        i_linearAccelerationSensor = sensorReadXYZ(linearAccelerationSensor, i_linearAccelerationSensor, data_linearAccelerationSensor, info_linearAccelerationSensor, ts_linearAccelerationSensor);
     });
 
     //magnetometer = new Magnetometer({ frequency: 60 });
     //magnetometer.addEventListener("reading", (e) => {
-    //    i_magnetometer = sensorReadXYZ(magnetometer, i_magnetometer, data_magnetometer, info_magnetometer);
+    //    i_magnetometer = sensorReadXYZ(magnetometer, i_magnetometer, data_magnetometer, info_magnetometer, ts_magnetometer);
     //});
 
     absoluteOrientationSensor = new AbsoluteOrientationSensor({ frequency: 60, referenceFrame: "device" });
     absoluteOrientationSensor.addEventListener("reading", (e) => {
-        i_absoluteOrientationSensor = sensorReadXYZW(absoluteOrientationSensor, i_absoluteOrientationSensor, data_absoluteOrientationSensor, info_absoluteOrientationSensor);
+        i_absoluteOrientationSensor = sensorReadXYZW(absoluteOrientationSensor, i_absoluteOrientationSensor, data_absoluteOrientationSensor, info_absoluteOrientationSensor, ts_absoluteOrientationSensor);
     });
 
     relativeOrientationSensor = new RelativeOrientationSensor({ frequency: 60, referenceFrame: "device" });
     relativeOrientationSensor.addEventListener("reading", (e) => {
-        i_relativeOrientationSensor = sensorReadXYZW(relativeOrientationSensor, i_relativeOrientationSensor, data_relativeOrientationSensor, info_relativeOrientationSensor);
+        i_relativeOrientationSensor = sensorReadXYZW(relativeOrientationSensor, i_relativeOrientationSensor, data_relativeOrientationSensor, info_relativeOrientationSensor, ts_relativeOrientationSensor);
     });
 
     accelerometer.start();
@@ -99,7 +115,11 @@ function numberFormat(n, places) {
     return (n < 0 ? "" : "+") + Number(n).toFixed(places);
 }
 
-function sensorReadXYZ(sensor, i, data, info) {
+function sensorReadXYZ(sensor, i, data, info, lastTimestamp) {
+    if (sensor.timestamp == null || sensor.timestamp == lastTimestamp) {
+        return;
+    }
+    lastTimestamp = sensor.timestamp;
     i++;
     data.push({
         Timestamp: sensor.timestamp,
@@ -114,7 +134,11 @@ function sensorReadXYZ(sensor, i, data, info) {
     return i;
 }
 
-function sensorReadXYZW(sensor, i, data, info) {
+function sensorReadXYZW(sensor, i, data, info, lastTimestamp) {
+    if (sensor.timestamp == null || sensor.timestamp == lastTimestamp) {
+        return;
+    }
+    lastTimestamp = sensor.timestamp;
     i++;
     data.push({
         Timestamp: sensor.timestamp,
