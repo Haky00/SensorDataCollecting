@@ -35,14 +35,6 @@ function startCollecting() {
     let i_absoluteOrientationSensor = 0;
     let i_relativeOrientationSensor = 0;
 
-    let i_accelerometer = 0;
-    let i_gravitySensor = 0;
-    let i_gyroscope = 0;
-    let i_linearAccelerationSensor = 0;
-    //let i_magnetometer = 0;
-    let i_absoluteOrientationSensor = 0;
-    let i_relativeOrientationSensor = 0;
-
     let ts_accelerometer = 0;
     let ts_gravitySensor = 0;
     let ts_gyroscope = 0;
