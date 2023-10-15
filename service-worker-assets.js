@@ -25,7 +25,7 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-1nAdYTs3q0MwZFKeHdbK4tFjB+XGtX9z8w+L8QaJgQ8=",
+      "hash": "sha256-+61Ak73rCIEesmTqkXjVTIydBlDniYLKzvyNmyfD9+c=",
       "url": "sensor-collecting.js"
     },
     {
@@ -429,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "ZmGorUnP"
+  "version": "q2nT1gBb"
 };
