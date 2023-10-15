@@ -3,6 +3,7 @@
 @inject ILocalStorageService localStorage
 @inject IHttpClientFactory httpClientFactory
 @inject IDialogService dialogService
+@inject ISnackbar snackbar
 
 <PageTitle>Uložená data</PageTitle>
 
@@ -69,7 +70,7 @@
 
     private async Task Upload(SensorDataWrapper data)
     {
-        DataUploader uploader = new DataUploader(localStorage, dialogService);
+        DataUploader uploader = new DataUploader(localStorage, dialogService, snackbar);
         await uploader.UploadData(data);
     }
 
@@ -80,7 +81,7 @@
             return;
         }
 
-        DataUploader uploader = new DataUploader(localStorage, dialogService);
+        DataUploader uploader = new DataUploader(localStorage, dialogService, snackbar);
         await uploader.UploadDataMultiple(dataList.Where(x => !x.IsUploaded));
     }
 }

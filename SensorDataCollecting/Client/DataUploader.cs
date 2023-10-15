@@ -11,6 +11,7 @@ public class DataUploader
 {
     private ILocalStorageService _localStorage;
     private IDialogService _dialogService;
+    private ISnackbar _snackbar;
 
     public int Total;
     public int Current;
@@ -18,10 +19,11 @@ public class DataUploader
     public List<HttpResponseMessage?> Responses = new();
     public EventCallback StateChanged;
 
-    public DataUploader(ILocalStorageService localStorage, IDialogService dialogService)
+    public DataUploader(ILocalStorageService localStorage, IDialogService dialogService, ISnackbar snackbar)
     {
         _localStorage = localStorage;
         _dialogService = dialogService;
+        _snackbar = snackbar;
     }
 
     private async Task<Supabase.Client> SupabaseConnect()
@@ -60,17 +62,53 @@ public class DataUploader
 
     public async Task UploadDataMultiple(IEnumerable<SensorDataWrapper> dataList)
     {
-        Supabase.Client db = await SupabaseConnect();
-
-        Total = dataList.Count();
-        Current = 0;
-        Success = 0;
-
-        var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
-        var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
-
-        foreach (var data in dataList)
+        try
         {
+            Supabase.Client db = await SupabaseConnect();
+
+            Total = dataList.Count();
+            Current = 0;
+            Success = 0;
+
+            var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
+            var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
+
+            foreach (var data in dataList)
+            {
+                HttpResponseMessage? response = await Upload(data, db);
+                Responses.Add(response);
+                if (response is not null && response.IsSuccessStatusCode)
+                {
+                    Current++;
+                    Success++;
+                    data.IsUploaded = true;
+                    await _localStorage.SetItemAsync("data" + data.Id, data);
+                    await StateChanged.InvokeAsync(data);
+                }
+            }
+
+            dialog.Close();
+        }
+        catch (Exception e)
+        {
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?), chyba: " + e.Message);
+        }
+        
+    }
+
+    public async Task UploadData(SensorDataWrapper data)
+    {
+        try
+        {
+            Supabase.Client db = await SupabaseConnect();
+
+            Total = 1;
+            Current = 0;
+            Success = 0;
+
+            var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
+            var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
+
             HttpResponseMessage? response = await Upload(data, db);
             Responses.Add(response);
             if (response is not null && response.IsSuccessStatusCode)
@@ -81,33 +119,12 @@ public class DataUploader
                 await _localStorage.SetItemAsync("data" + data.Id, data);
                 await StateChanged.InvokeAsync(data);
             }
+
+            dialog.Close();
         }
-
-        dialog.Close();
-    }
-
-    public async Task UploadData(SensorDataWrapper data)
-    {
-        Supabase.Client db = await SupabaseConnect();
-
-        Total = 1;
-        Current = 0;
-        Success = 0;
-
-        var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
-        var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
-
-        HttpResponseMessage? response = await Upload(data, db);
-        Responses.Add(response);
-        if (response is not null && response.IsSuccessStatusCode)
+        catch (Exception e)
         {
-            Current++;
-            Success++;
-            data.IsUploaded = true;
-            await _localStorage.SetItemAsync("data" + data.Id, data);
-            await StateChanged.InvokeAsync(data);
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?), chyba: " + e.Message);
         }
-
-        dialog.Close();
     }
 }

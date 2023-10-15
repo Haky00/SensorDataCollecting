@@ -7,6 +7,7 @@
 @inject IDialogService dialogService
 @inject IJSRuntime js
 @inject ILocalStorageService localStorage
+@inject ISnackbar snackbar
 
 <MudStack Spacing="2">
     <MudText Typo="Typo.h6">Probíhá sběr dat</MudText>
@@ -129,7 +130,6 @@
                 {
                     StartTime = collectionStart,
                     EndTime = collectionEnd,
-                    SamplingRate = 60,
                     Movement = (MovementType)movement,
                     Id = Guid.NewGuid()
                 }
@@ -151,7 +151,7 @@
     private async Task SubmitSend()
     {
         SensorDataWrapper data = await SaveCollectedData();
-        DataUploader uploader = new DataUploader(localStorage, dialogService);
+        DataUploader uploader = new DataUploader(localStorage, dialogService, snackbar);
         await uploader.UploadData(data);
         navManager.NavigateTo("Collection");
     }

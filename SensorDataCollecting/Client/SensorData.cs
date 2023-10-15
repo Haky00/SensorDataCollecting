@@ -44,7 +44,6 @@ public class DataInfo : BaseModel
     [PrimaryKey]
     public Guid Id { get; set; }
     public MovementType Movement { get; set; }
-    public int SamplingRate { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 }
