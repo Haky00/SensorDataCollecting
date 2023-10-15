@@ -65,7 +65,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-HOg8k8W+aH4RfAuj6giVlTbiYC0gwmTBjq51JRN5vCA=",
+      "hash": "sha256-5LtTDSBxwgCnLCByV\/OYSu8gs4B8uxsnY332YACmKSk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -157,7 +157,7 @@
       "url": "_framework\/MimeMapping.dll"
     },
     {
-      "hash": "sha256-eogLCiz1YDZ62llVwK3lmvcklqokLWiVG\/l1rCsp1WQ=",
+      "hash": "sha256-s\/ftJE4owN9GVpxpbLKF71FB3CUP4DBg9WfqrBEdjis=",
       "url": "_framework\/MudBlazor.dll"
     },
     {
@@ -169,7 +169,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-6a3lDUcWcIN57fdF9PswoNzE0ArmbWNDFCIzc\/wrBwI=",
+      "hash": "sha256-4r5qjupxWbuFof4WEYwX6qaQZjRGVAsI7qUsmU3J2cM=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -309,7 +309,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-UrxV6fKvG9YfCceVQs4Lh+01gnMmIqAuUBN+lBVe7PU=",
+      "hash": "sha256-o7oyE8O0H2w79uApyCcjFJxR8lGBDv5LNPPa290tQCA=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -429,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "q2nT1gBb"
+  "version": "OHMmomdB"
 };
