@@ -62,17 +62,16 @@ public class DataUploader
 
     public async Task UploadDataMultiple(IEnumerable<SensorDataWrapper> dataList)
     {
+        Supabase.Client db = await SupabaseConnect();
+
+        Total = dataList.Count();
+        Current = 0;
+        Success = 0;
+
+        var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
+        var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
         try
         {
-            Supabase.Client db = await SupabaseConnect();
-
-            Total = dataList.Count();
-            Current = 0;
-            Success = 0;
-
-            var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
-            var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
-
             foreach (var data in dataList)
             {
                 HttpResponseMessage? response = await Upload(data, db);
@@ -89,26 +88,26 @@ public class DataUploader
 
             dialog.Close();
         }
-        catch (Exception e)
+        catch
         {
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?), chyba: " + e.Message);
+            dialog.Close();
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)");
         }
-        
     }
 
     public async Task UploadData(SensorDataWrapper data)
     {
+
+        Supabase.Client db = await SupabaseConnect();
+
+        Total = 1;
+        Current = 0;
+        Success = 0;
+
+        var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
+        var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
         try
         {
-            Supabase.Client db = await SupabaseConnect();
-
-            Total = 1;
-            Current = 0;
-            Success = 0;
-
-            var parameters = new DialogParameters<UploadDialog> { { x => x.Uploader, this } };
-            var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
-
             HttpResponseMessage? response = await Upload(data, db);
             Responses.Add(response);
             if (response is not null && response.IsSuccessStatusCode)
@@ -122,9 +121,10 @@ public class DataUploader
 
             dialog.Close();
         }
-        catch (Exception e)
+        catch
         {
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?), chyba: " + e.Message);
+            dialog.Close();
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)");
         }
     }
 }
