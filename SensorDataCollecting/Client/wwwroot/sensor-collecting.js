@@ -119,6 +119,7 @@ function sensorReadXYZ(sensor, i, data, info, lastTimestamp) {
     if (sensor.timestamp == null || sensor.timestamp == lastTimestamp) {
         return;
     }
+    lastTimestamp = sensor.timestamp;
     i++;
     data.push({
         Timestamp: sensor.timestamp,
@@ -137,6 +138,7 @@ function sensorReadXYZW(sensor, i, data, info, lastTimestamp) {
     if (sensor.timestamp == null || sensor.timestamp == lastTimestamp) {
         return;
     }
+    lastTimestamp = sensor.timestamp;
     i++;
     data.push({
         Timestamp: sensor.timestamp,
