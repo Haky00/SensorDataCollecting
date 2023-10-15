@@ -3,6 +3,7 @@ using Blazored.LocalStorage.Serialization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using MudBlazor;
 using MudBlazor.Services;
 using SensorDataCollecting.Client;
 using System.Xml.Serialization;
@@ -12,7 +13,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient("SensorDataCollecting.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomCenter;
+    config.SnackbarConfiguration.PreventDuplicates = false;
+    config.SnackbarConfiguration.ShowCloseIcon = false;
+});
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.Replace(ServiceDescriptor.Scoped<IJsonSerializer, NewtonSoftJsonSerializer>());
 

@@ -91,7 +91,7 @@ public class DataUploader
         catch
         {
             dialog.Close();
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)");
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)", Severity.Error);
         }
     }
 
@@ -124,7 +124,7 @@ public class DataUploader
         catch
         {
             dialog.Close();
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)");
+            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)", Severity.Error);
         }
     }
 }
