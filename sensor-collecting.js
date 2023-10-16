@@ -99,7 +99,7 @@ function sensorReadXYZ(sensor, data) {
     data.ts = sensor.timestamp;
     data.i++;
     data.data.push({
-        Timestamp: sensor.timestamp,
+        T: sensor.timestamp,
         X: sensor.x,
         Y: sensor.y,
         Z: sensor.z
@@ -117,7 +117,7 @@ function sensorReadXYZW(sensor, data) {
     data.ts = sensor.timestamp;
     data.i++;
     data.data.push({
-        Timestamp: sensor.timestamp,
+        T: sensor.timestamp,
         X: sensor.quaternion[0],
         Y: sensor.quaternion[1],
         Z: sensor.quaternion[2],
