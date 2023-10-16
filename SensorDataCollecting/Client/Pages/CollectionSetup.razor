@@ -46,6 +46,7 @@
 
         <MudText Typo="Typo.h6">Pomocné údaje (vše nepovinné)</MudText>
 
+        <MudTextField @bind-Value="userInfo.Phone" @bind-Value:after="SaveUserInfo" Label="Model telefonu" MaxLength="100" Variant="Variant.Outlined" />
         <MudSelect @bind-Value="userInfo.Gender" @bind-Value:after="SaveUserInfo"
                    ToStringFunc="(value) => value?.ToName()"
                    Label="Pohlaví"
@@ -58,7 +59,6 @@
                 <MudSelectItem Value="value" />
             }
         </MudSelect>
-        <MudTextField @bind-Value="userInfo.Phone" @bind-Value:after="SaveUserInfo" Label="Model telefonu" MaxLength="100" Variant="Variant.Outlined" />
         <MudNumericField @bind-Value="userInfo.Age" @bind-Value:after="SaveUserInfo" Label="Věk" Min="0" Max="150" Variant="Variant.Outlined" />
         <MudNumericField @bind-Value="userInfo.Height" @bind-Value:after="SaveUserInfo" Label="Výška [cm]" Min="0" Max="300" Variant="Variant.Outlined" />
         <MudNumericField @bind-Value="userInfo.Weight" @bind-Value:after="SaveUserInfo" Label="Váha [kg]" Min="0" Max="500" Variant="Variant.Outlined" />
