@@ -12,7 +12,8 @@ public enum MovementType
     Bus,
     Tram,
     Train,
-    Metro
+    Metro,
+    OnTable
 }
 
 public static class MovementTypeExtensions
@@ -31,6 +32,7 @@ public static class MovementTypeExtensions
             MovementType.Tram => "Jízda v tramvaji",
             MovementType.Train => "Jízda ve vlaku",
             MovementType.Metro => "Jízda v metru",
+            MovementType.OnTable => "Mobil ležící na stole",
             _ => movementType.ToString()
         };
 }

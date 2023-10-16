@@ -12,6 +12,7 @@ public class SensorDataDb : BaseModel
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     public Gender? Gender { get; set; }
+    public string? Phone { get; set; }
     public int? Age { get; set; }
     public int? Weight { get; set; }
     public int? Height { get; set; }
