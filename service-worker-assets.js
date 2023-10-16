@@ -65,7 +65,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-N9Rm37OERdOOnYNh9ad4OUNFzXlNB7oRtyp+aMj4NXY=",
+      "hash": "sha256-kbjLZJHcwVQJ8z7LrwLwi7GP3cuo0uWbxQW7gJahuow=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -157,7 +157,7 @@
       "url": "_framework\/MimeMapping.dll"
     },
     {
-      "hash": "sha256-H7N6nl17UJJ9p+x9xMx2FnGu32fWMN+Gv9OadIwvIzk=",
+      "hash": "sha256-D7YbYIe+38slCHOGMKB5q4DYZnBdFYo\/IkstciroiSY=",
       "url": "_framework\/MudBlazor.dll"
     },
     {
@@ -169,7 +169,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-s7zvl9zmGKAvSS9oaakeR68Kq0FBnTKcOkAwtJA4cIA=",
+      "hash": "sha256-KSLiccl5VP0aqr86kKhL\/JvF6yeRoxJFyOh4krDr\/U8=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -265,7 +265,7 @@
       "url": "_framework\/System.Drawing.Primitives.dll"
     },
     {
-      "hash": "sha256-s32ZQS7FyXKRus9Ypsx\/7QnOaCoWVjKnJK16+kAX5GI=",
+      "hash": "sha256-q8rv5EjoadSwqpyUfsAGnYAmJgfbQzI1Wm58I99H7l4=",
       "url": "_framework\/System.Linq.dll"
     },
     {
@@ -429,5 +429,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "lPmxIU3M"
+  "version": "jmwNdv+W"
 };
