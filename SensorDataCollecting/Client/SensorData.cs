@@ -1,19 +1,25 @@
 ﻿using Postgrest.Attributes;
 using Postgrest.Models;
 using SensorDataCollecting.Client.Enums;
-using System.Text.Json;
 
 namespace SensorDataCollecting.Client;
 
-public class SensorDataJson : BaseModel
+public class SensorDataDb : BaseModel
 {
-    [PrimaryKey]
+    [PrimaryKey(shouldInsert: true)]
     public Guid Id { get; set; }
+    public MovementType Movement { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public Gender? Gender { get; set; }
+    public int? Age { get; set; }
+    public int? Weight { get; set; }
+    public int? Height { get; set; }
     public string? Accelerometer { get; set; }
     public string? GravitySensor { get; set; }
     public string? Gyroscope { get; set; }
     public string? LinearAccelerationSensor { get; set; }
-    public string? Magnetometer { get; set; }
+    //public string? Magnetometer { get; set; }
     public string? AbsoluteOrientationSensor { get; set; }
     public string? RelativeOrientationSensor { get; set; }
 }
@@ -26,22 +32,10 @@ public class SensorData
     public List<SensorXYZ>? LinearAccelerationSensor { get; set; }
     public List<SensorXYZW>? AbsoluteOrientationSensor { get; set; }
     public List<SensorXYZW>? RelativeOrientationSensor { get; set; }
-
-    public SensorDataJson ToJsonData() =>
-        new()
-        {
-            Accelerometer = Accelerometer is null ? null : JsonSerializer.Serialize(Accelerometer),
-            GravitySensor = GravitySensor is null ? null : JsonSerializer.Serialize(GravitySensor),
-            Gyroscope = Gyroscope is null ? null : JsonSerializer.Serialize(Gyroscope),
-            LinearAccelerationSensor = LinearAccelerationSensor is null ? null : JsonSerializer.Serialize(LinearAccelerationSensor),
-            AbsoluteOrientationSensor = AbsoluteOrientationSensor is null ? null : JsonSerializer.Serialize(AbsoluteOrientationSensor),
-            RelativeOrientationSensor = RelativeOrientationSensor is null ? null : JsonSerializer.Serialize(RelativeOrientationSensor)
-        };
 }
 
-public class DataInfo : BaseModel
+public class DataInfo
 {
-    [PrimaryKey]
     public Guid Id { get; set; }
     public MovementType Movement { get; set; }
     public DateTime StartTime { get; set; }

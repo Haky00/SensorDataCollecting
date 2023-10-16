@@ -41,29 +41,22 @@ public class DataUploader
         return supabase;
     }
 
-    private async Task<HttpResponseMessage?> Upload(SensorDataWrapper data, Supabase.Client db)
+    private async Task<UserInfo> GetUserInfo()
     {
-        QueryOptions queryOptions = new() { Returning = QueryOptions.ReturnType.Minimal };
-
-        SensorDataJson dataJson = data.SensorData.ToJsonData();
-        dataJson.Id = data.DataInfo.Id;
-        var a = await db.From<DataInfo>().Upsert(data.DataInfo, queryOptions);
-        if (a.ResponseMessage is null || !a.ResponseMessage.IsSuccessStatusCode)
+        if (await _localStorage.ContainKeyAsync("userInfo"))
         {
-            return a.ResponseMessage;
+            return await _localStorage.GetItemAsync<UserInfo>("userInfo");
         }
-        var b = await db.From<SensorDataJson>().Upsert(dataJson, queryOptions);
-
-        return b.ResponseMessage;
+        return new();
     }
 
-    //private Task<HttpResponseMessage> Upload(SensorDataWrapper data) =>
-    //    _httpClient.PostAsJsonAsync("/Api/SensorData", data.SensorData);
+    private async Task<HttpResponseMessage?> Upload(SensorDataWrapper data, Supabase.Client db, UserInfo userInfo) =>
+        (await db.From<SensorDataDb>().Insert(data.ToDbWrapper(userInfo), new QueryOptions() { Returning = QueryOptions.ReturnType.Minimal})).ResponseMessage;
 
     public async Task UploadDataMultiple(IEnumerable<SensorDataWrapper> dataList)
     {
         Supabase.Client db = await SupabaseConnect();
-
+        UserInfo userInfo = await GetUserInfo();
         Total = dataList.Count();
         Current = 0;
         Success = 0;
@@ -74,7 +67,7 @@ public class DataUploader
         {
             foreach (var data in dataList)
             {
-                HttpResponseMessage? response = await Upload(data, db);
+                HttpResponseMessage? response = await Upload(data, db, userInfo);
                 Responses.Add(response);
                 if (response is not null && response.IsSuccessStatusCode)
                 {
@@ -91,15 +84,14 @@ public class DataUploader
         catch
         {
             dialog.Close();
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)", Severity.Error);
+            _snackbar.Add("Nahrávání se nezdařilo. Zkontrolujte připojení k internetu.", Severity.Error);
         }
     }
 
     public async Task UploadData(SensorDataWrapper data)
     {
-
         Supabase.Client db = await SupabaseConnect();
-
+        UserInfo userInfo = await GetUserInfo();
         Total = 1;
         Current = 0;
         Success = 0;
@@ -108,7 +100,7 @@ public class DataUploader
         var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
         try
         {
-            HttpResponseMessage? response = await Upload(data, db);
+            HttpResponseMessage? response = await Upload(data, db, userInfo);
             Responses.Add(response);
             if (response is not null && response.IsSuccessStatusCode)
             {
@@ -124,7 +116,7 @@ public class DataUploader
         catch
         {
             dialog.Close();
-            _snackbar.Add("Nahrávání se nezdařilo (jste připojeni k internetu?)", Severity.Error);
+            _snackbar.Add("Nahrávání se nezdařilo. Zkontrolujte připojení k internetu.", Severity.Error);
         }
     }
 }
