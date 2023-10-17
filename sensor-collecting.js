@@ -130,7 +130,15 @@ function sensorReadXYZW(sensor, data) {
 }
 
 function stopCollecting() {
+    accelerometer.stop();
+    gravitySensor.stop();
     gyroscope.stop();
+    linearAccelerationSensor.stop();
+    //magnetometer.start();
+    absoluteOrientationSensor.stop();
+    relativeOrientationSensor.stop();
+
+
 }
 
 function getCollectedData() {
