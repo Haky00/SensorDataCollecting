@@ -80,7 +80,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (collecting)
+        if (collecting || stopDialogVisible)
         {
             return;
         }
@@ -96,9 +96,9 @@
             return;
         }
         await js.InvokeVoidAsync("stopCollecting");
+        stopDialogVisible = true;
         collecting = false;
         collectionEnd = DateTime.UtcNow;
-        stopDialogVisible = true;
     }
 
     private async Task<SensorDataWrapper> SaveCollectedData()
