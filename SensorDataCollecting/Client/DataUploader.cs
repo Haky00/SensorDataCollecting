@@ -4,6 +4,7 @@ using MudBlazor;
 using Postgrest;
 using SensorDataCollecting.Client.Shared;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SensorDataCollecting.Client;
 
@@ -67,6 +68,7 @@ public class DataUploader
         {
             foreach (var data in dataList)
             {
+                data.SensorData = await _localStorage.GetItemAsync<SensorData>("data" + data.Id);
                 HttpResponseMessage? response = await Upload(data, db, userInfo);
                 Responses.Add(response);
                 if (response is not null && response.IsSuccessStatusCode)
@@ -74,7 +76,8 @@ public class DataUploader
                     Current++;
                     Success++;
                     data.IsUploaded = true;
-                    await _localStorage.SetItemAsync("data" + data.Id, data);
+                    data.SensorData = null;
+                    await _localStorage.SetItemAsync("info" + data.Id, data);
                     await StateChanged.InvokeAsync(data);
                 }
             }
@@ -100,6 +103,7 @@ public class DataUploader
         var dialog = await _dialogService.ShowAsync<UploadDialog>("Nahrávání souborů", parameters);
         try
         {
+            data.SensorData = await _localStorage.GetItemAsync<SensorData>("data" + data.Id);
             HttpResponseMessage? response = await Upload(data, db, userInfo);
             Responses.Add(response);
             if (response is not null && response.IsSuccessStatusCode)
@@ -107,7 +111,8 @@ public class DataUploader
                 Current++;
                 Success++;
                 data.IsUploaded = true;
-                await _localStorage.SetItemAsync("data" + data.Id, data);
+                data.SensorData = null;
+                await _localStorage.SetItemAsync("info" + data.Id, data);
                 await StateChanged.InvokeAsync(data);
             }
 

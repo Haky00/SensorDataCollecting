@@ -114,7 +114,6 @@
             info = await localStorage.GetItemAsync<SavedDataInfo>("savedDataInfo");
             nextItemId = info.SavedData.Count == 0 ? 1 : info.SavedData.Max() + 1;
         }
-        string nextItemKey = "data" + nextItemId;
         string jsonData = await js.InvokeAsync<string>("getCollectedData");
         SensorData? data = JsonSerializer.Deserialize<SensorData>(jsonData);
         if (data is null)
@@ -124,7 +123,6 @@
 
         SensorDataWrapper dataWrapper = new()
             {
-                SensorData = data,
                 Id = nextItemId,
                 DataInfo = new()
                 {
@@ -135,7 +133,8 @@
                 }
             };
 
-        await localStorage.SetItemAsync<SensorDataWrapper>(nextItemKey, dataWrapper);
+        await localStorage.SetItemAsync<SensorDataWrapper>("info" + nextItemId, dataWrapper);
+        await localStorage.SetItemAsync<SensorData>("data" + nextItemId, data);
         info.SavedData.Add(nextItemId);
         await localStorage.SetItemAsync<SavedDataInfo>("savedDataInfo", info);
         return dataWrapper;

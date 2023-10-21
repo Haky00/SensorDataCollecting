@@ -61,9 +61,9 @@
 
         foreach (int id in info.SavedData)
         {
-            if (await localStorage.ContainKeyAsync("data" + id))
+            if (await localStorage.ContainKeyAsync("info" + id))
             {
-                dataList.Add(await localStorage.GetItemAsync<SensorDataWrapper>("data" + id));
+                dataList.Add(await localStorage.GetItemAsync<SensorDataWrapper>("info" + id));
             }
         }
     }
