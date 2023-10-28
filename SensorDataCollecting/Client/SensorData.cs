@@ -11,6 +11,7 @@ public class SensorDataDb : BaseModel
     public MovementType Movement { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
+    public string? Note { get; set; }
     public Gender? Gender { get; set; }
     public string? Phone { get; set; }
     public int? Age { get; set; }
@@ -41,6 +42,7 @@ public class DataInfo
     public MovementType Movement { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
+    public string? Note { get; set; }
 }
 
 public struct SensorXYZ

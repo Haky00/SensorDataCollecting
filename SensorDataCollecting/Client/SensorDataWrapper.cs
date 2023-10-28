@@ -15,6 +15,7 @@ public class SensorDataWrapper
             Id = DataInfo.Id,
             StartTime = DataInfo.StartTime,
             EndTime = DataInfo.EndTime,
+            Note = DataInfo.Note,
             Movement = DataInfo.Movement,
             Phone = info.Phone,
             Gender = info.Gender,
