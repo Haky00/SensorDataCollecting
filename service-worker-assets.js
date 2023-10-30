@@ -13,6 +13,10 @@
       "url": "icon-512.png"
     },
     {
+      "hash": "sha256-fMt43I79Nn5djGc641KGtBEV5xBMEXWwVhHI61oNLGQ=",
+      "url": "images\/guide.png"
+    },
+    {
       "hash": "sha256-oiuU9L9DeWNlpXRpA2kQlHsPsARV+D3DbJcb75N9l18=",
       "url": "index.html"
     },
@@ -65,7 +69,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-ScAhebVA8iDAWNt4gmUnsZXxWShUW0bGhtqHZYuIzf0=",
+      "hash": "sha256-DHSYpdKsLRLG1eVxS4EO4XYbvdqcfOqh54g808WkRe4=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -169,7 +173,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-sFttavh+RUPSVN0JyLPK9mzkPbhQ2BDnnWImzJXLeZs=",
+      "hash": "sha256-FvTEkQtaVQMCUdymG4FAM0pBrCtAtU0HsXMQtIGSFn0=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -429,5 +433,5 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     }
   ],
-  "version": "PTXcpM5O"
+  "version": "QTX+1de\/"
 };
