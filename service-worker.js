@@ -9,7 +9,7 @@ self.addEventListener('message', event => {
     if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
-const CACHE_VERSION = 1.1;
+const CACHE_VERSION = 1.2;
 const cacheNamePrefix = 'offline-cache-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
 const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
@@ -49,4 +49,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
-/* Manifest version: oUlZ6bxO */
+/* Manifest version: lay5uZSD */
