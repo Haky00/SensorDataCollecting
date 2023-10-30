@@ -73,7 +73,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-+Vey3ah101SxTSzhckE8At33xWd\/f8Aw2BJ5G76YIkI=",
+      "hash": "sha256-AY3kj5NssamtAMxd\/ZymP8qY\/BTpOzvCIfs+ossBUOA=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -177,7 +177,7 @@
       "url": "_framework\/Newtonsoft.Json.dll"
     },
     {
-      "hash": "sha256-NRh1tMjkI6PAYvok\/X2iGcFKE63wzTEIBsh7qaV7xwI=",
+      "hash": "sha256-NXMm\/4d6nAkyvjBj\/xOcRsJ98wvqh6Fof58QjMMPm7s=",
       "url": "_framework\/SensorDataCollecting.Client.dll"
     },
     {
@@ -453,5 +453,5 @@
       "url": "_content\/Toolbelt.Blazor.PWA.Updater\/Toolbelt.Blazor.PWA.Updater.bundle.scp.css"
     }
   ],
-  "version": "d1xWQUgy"
+  "version": "oUlZ6bxO"
 };
