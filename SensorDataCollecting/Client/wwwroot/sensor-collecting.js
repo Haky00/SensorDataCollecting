@@ -16,6 +16,8 @@ let data_linearAccelerationSensor;
 let data_absoluteOrientationSensor;
 let data_relativeOrientationSensor;
 
+let secondsCancel;
+
 const info_show_delay = 6;
 
 function sensorData(infoDiv) {
@@ -86,6 +88,16 @@ function startCollecting() {
     //magnetometer.start();
     absoluteOrientationSensor.start();
     relativeOrientationSensor.start();
+
+    var seconds = 0;
+    var secondsCounter = document.getElementById('seconds-counter');
+
+    function incrementSeconds() {
+        seconds += 1;
+        secondsCounter.innerText = seconds + " s";
+    }
+
+    secondsCancel = setInterval(incrementSeconds, 1000);
 }
 
 function numberFormat(n, places) {
@@ -138,7 +150,7 @@ function stopCollecting() {
     absoluteOrientationSensor.stop();
     relativeOrientationSensor.stop();
 
-
+    clearInterval(secondsCancel);
 }
 
 function getCollectedData() {

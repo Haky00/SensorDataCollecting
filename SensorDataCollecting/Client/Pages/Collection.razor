@@ -12,6 +12,7 @@
 
 <MudStack Spacing="2">
     <MudText Typo="Typo.h6">Probíhá sběr dat</MudText>
+    <div id="seconds-counter"></div>
     <MudText Typo="Typo.body1">Typ pohybu: @movement?.ToName()</MudText>
     <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="my-4" Style="height: 80px" OnClick="StopCollecting">Ukončit sběr dat</MudButton>
     <MudDivider />
@@ -147,6 +148,10 @@
 
     private async Task SubmitLocal()
     {
+        if (processing)
+        {
+            return;
+        }
         processing = true;
         await InvokeAsync(StateHasChanged);
         await SaveCollectedData();
@@ -156,6 +161,10 @@
 
     private async Task SubmitSend()
     {
+        if (processing)
+        {
+            return;
+        }
         processing = true;
         await InvokeAsync(StateHasChanged);
         SensorDataWrapper data = await SaveCollectedData();
