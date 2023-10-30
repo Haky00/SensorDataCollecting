@@ -52,8 +52,8 @@
         <MudText Typo="Typo.body1" Class="mb-2">Chcete zaslat nasbíraná data ihned, nebo je lokálně uložit a zaslat později?</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled" OnClick="SubmitLocal">Lokálně uložit</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SubmitSend">Zaslat ihned</MudButton>
+        <MudButton Variant="Variant.Filled" OnClick="SubmitLocal" Disabled="processing">Lokálně uložit</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SubmitSend" Disabled="processing">Zaslat ihned</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -66,6 +66,7 @@
     private MovementType? movement;
 
     private bool stopDialogVisible = false;
+    private bool processing = false;
     private bool collecting = false;
 
     private DateTime collectionStart;
@@ -146,6 +147,8 @@
 
     private async Task SubmitLocal()
     {
+        processing = true;
+        await InvokeAsync(StateHasChanged);
         await SaveCollectedData();
         navManager.NavigateTo("Collection");
     }
@@ -153,6 +156,8 @@
 
     private async Task SubmitSend()
     {
+        processing = true;
+        await InvokeAsync(StateHasChanged);
         SensorDataWrapper data = await SaveCollectedData();
         DataUploader uploader = new DataUploader(localStorage, dialogService, snackbar);
         await uploader.UploadData(data);

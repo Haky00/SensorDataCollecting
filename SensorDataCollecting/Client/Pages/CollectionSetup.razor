@@ -1,4 +1,5 @@
 ﻿@page "/Collection"
+@using System.Timers;
 <PageTitle>Sběr dat</PageTitle>
 
 @inject NavigationManager navManager
@@ -27,7 +28,7 @@
                    Variant="Variant.Outlined"
                    AnchorOrigin="Origin.BottomCenter"
                    PopoverClass="mt-1">
-            @foreach (var value in Enum.GetValues(typeof(MovementType)).Cast<MovementType?>())
+            @foreach (var value in movements)
             {
                 <MudSelectItem Value="value" />
             }
@@ -39,7 +40,7 @@
                    Color="Color.Primary"
                    Class="my-4"
                    Style="height: 80px"
-                   OnClick="StartCollecting"
+                   OnClick="ShowStartDialog"
                    Disabled="movement is null">
             Start sběru dat senzorů
         </MudButton>
@@ -67,11 +68,50 @@
     }
 </MudStack>
 
+<MudDialog @bind-IsVisible="startDialogVisible" Options="new() { FullWidth = true }">
+    <TitleContent>
+        <MudText Typo="Typo.h6">Začátek sběru</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack AlignItems="AlignItems.Center" Spacing="4" Class="mb-2">
+            <MudImage Src="images/guide.png" Alt="Orientation guide" Elevation="4" Class="rounded-lg" Height="200" />
+            <MudText Typo="Typo.body1">Při sběru držte zařízení tak, jako byste se aktivně dívali na tuto stránku. Sběr provádějte 15 až 45 sekund.</MudText>
+            @if (countdown >= 0)
+            {
+                <MudText Typo="Typo.h5">@(countdown + 1)</MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="StartTimer" Disabled="@(countdown >= 0)">Start</MudButton>
+    </DialogActions>
+</MudDialog>
+
 @code {
     private bool? sensorsAvailable;
     private MovementType? movement;
     private UserInfo userInfo = new();
     private string? note;
+    private bool startDialogVisible = false;
+    private int countdown = -1;
+    private Timer? timer;
+
+    private static readonly MovementType?[] movements =
+    {
+        MovementType.Lay,
+        MovementType.OnTable,
+        MovementType.Sit,
+        MovementType.Walk,
+        MovementType.Run,
+        MovementType.StairsDown,
+        MovementType.StairsUp,
+        MovementType.Car,
+        MovementType.Bus,
+        MovementType.Tram,
+        MovementType.Train,
+        MovementType.Metro,
+        MovementType.Other
+    };
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,6 +125,37 @@
     private async Task SaveUserInfo()
     {
         await localStorage.SetItemAsync<UserInfo>("userInfo", userInfo);
+    }
+
+    private void ShowStartDialog() => startDialogVisible = true;
+
+    private void StartTimer()
+    {
+        countdown = 2;
+        if (timer is not null)
+        {
+            timer.Stop();
+        }
+        timer = new(1000);
+        timer.Elapsed += TimerTick;
+        timer.AutoReset = true;
+        timer.Start();
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void TimerTick(object? source, ElapsedEventArgs e)
+    {
+        if (countdown > 0)
+        {
+            countdown -= 1;
+            InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            countdown = -1;
+            timer?.Stop();
+            StartCollecting();
+        }
     }
 
     private void StartCollecting()
