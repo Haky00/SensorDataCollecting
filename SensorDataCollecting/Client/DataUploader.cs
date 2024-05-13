@@ -80,6 +80,7 @@ public class DataUploader
                     await _localStorage.SetItemAsync("info" + data.Id, data);
                     await StateChanged.InvokeAsync(data);
                 }
+                await _localStorage.SetItemAsync("data" + data.Id, "");
             }
 
             dialog.Close();
@@ -115,7 +116,7 @@ public class DataUploader
                 await _localStorage.SetItemAsync("info" + data.Id, data);
                 await StateChanged.InvokeAsync(data);
             }
-
+            await _localStorage.SetItemAsync("data" + data.Id, "");
             dialog.Close();
         }
         catch
